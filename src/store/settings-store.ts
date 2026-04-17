@@ -2,7 +2,11 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type ArabicFontId = "amiri" | "scheherazade" | "noto-naskh";
+export type ArabicFontId =
+  | "amiri"
+  | "scheherazade"
+  | "noto-naskh"
+  | "indopak";
 
 export type ColorScheme = "light" | "dark";
 
@@ -29,7 +33,7 @@ export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
       colorScheme: "light",
-      arabicFontId: "amiri",
+      arabicFontId: "indopak",
       arabicFontSizePx: 24,
       translationFontSizePx: 16,
       selectedEditionCode: null,
@@ -49,6 +53,27 @@ export const useSettingsStore = create<SettingsState>()(
     }),
     {
       name: "nur-quran-settings",
+      version: 2,
+      migrate: (persistedState) => {
+        if (!persistedState || typeof persistedState !== "object") {
+          return persistedState;
+        }
+        const ps = persistedState as { state?: { arabicFontId?: string } };
+        const id = ps.state?.arabicFontId;
+        if (
+          id === "uthmanic-hafs-v22" ||
+          id === "kfgqpc-nastaleeq"
+        ) {
+          return {
+            ...ps,
+            state: {
+              ...ps.state,
+              arabicFontId: "amiri",
+            },
+          };
+        }
+        return persistedState;
+      },
       partialize: (s) => ({
         colorScheme: s.colorScheme,
         arabicFontId: s.arabicFontId,

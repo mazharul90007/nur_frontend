@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const base =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://localhost:4000";
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
+  "http://localhost:4000";
 
 export const api = axios.create({
   baseURL: base,

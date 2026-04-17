@@ -1,18 +1,26 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import {
   Amiri,
+  Cormorant_Garamond,
   DM_Sans,
   Noto_Naskh_Arabic,
   Scheherazade_New,
 } from "next/font/google";
 import { AppShell } from "@/components/app-shell";
 import { Providers } from "@/components/providers";
-import { getSurahsStatic } from "@/lib/quran-server";
 import "./globals.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
+});
+
+const heroSerif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-hero-serif",
 });
 
 const amiri = Amiri({
@@ -33,6 +41,12 @@ const notoNaskh = Noto_Naskh_Arabic({
   variable: "--font-arabic-noto",
 });
 
+const indopak = localFont({
+  src: "../../public/data/quran_assets/indopakfont.ttf",
+  variable: "--font-arabic-indopak",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Nur — Quran Reader",
   description: "Read the Quran with translations and search",
@@ -46,13 +60,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const initialSurahs = await getSurahsStatic();
-
   return (
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dmSans.variable} ${amiri.variable} ${scheherazade.variable} ${notoNaskh.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${heroSerif.variable} ${amiri.variable} ${scheherazade.variable} ${notoNaskh.variable} ${indopak.variable} h-full antialiased`}
     >
       <head>
         {/* Runs before paint so dark mode matches localStorage (zustand rehydrates async). */}
@@ -64,7 +76,7 @@ export default async function RootLayout({
       </head>
       <body className="min-h-full">
         <Providers>
-          <AppShell initialSurahs={initialSurahs}>{children}</AppShell>
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>

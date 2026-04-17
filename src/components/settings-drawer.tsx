@@ -7,6 +7,7 @@ import type { ArabicFontId } from "@/store/settings-store";
 import { useSettingsStore } from "@/store/settings-store";
 
 const FONT_OPTIONS: { id: ArabicFontId; label: string }[] = [
+  { id: "indopak", label: "IndoPak (local)" },
   { id: "amiri", label: "Amiri" },
   { id: "scheherazade", label: "Scheherazade New" },
   { id: "noto-naskh", label: "Noto Naskh Arabic" },

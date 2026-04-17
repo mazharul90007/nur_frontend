@@ -1,72 +1,112 @@
 import Image from "next/image";
 import Link from "next/link";
-import { HiOutlineArrowRight, HiOutlineMagnifyingGlass } from "react-icons/hi2";
+import { HiOutlineArrowRight } from "react-icons/hi2";
 
-/** Viewport below sticky header (h-14 = 3.5rem). */
-const heroH = "min-h-[calc(100dvh-3.5rem)]";
+/** Hero fills viewport below header (h-14); fixed image still covers full screen incl. navbar. */
+const mainMinH = "min-h-[calc(100dvh-3.5rem)]";
+
+/** Cormorant Garamond — manuscript-style English (see --font-hero-serif in layout). */
+const heroSerif = "font-[family-name:var(--font-hero-serif),serif]";
+/** Scheherazade — classical Quranic Arabic display. */
+const heroArabic = "font-[family-name:var(--font-arabic-scheherazade),serif]";
 
 export default function HomePage() {
   return (
-    <div className={`-mx-4 -mt-6 -mb-6 sm:-mx-8 sm:-mt-8 sm:-mb-8 ${heroH}`}>
-      <section className={`relative w-full overflow-hidden ${heroH}`}>
-        <div className={`absolute inset-0 ${heroH}`}>
-          <Image
-            src="/images/quran-img.jpg"
-            alt="Decorative photograph of a Quran with gold calligraphy on a dark cover"
-            fill
-            priority
-            className="object-cover object-[55%_center] sm:object-[65%_center] lg:object-right"
-            sizes="100vw"
-          />
-          {/* Readable band on the left for dark text (light) / light text (dark); photo stays visible on the right */}
-          <div
-            className="absolute inset-0 bg-linear-to-r from-(--background)/95 from-0% via-(--background)/55 via-42% to-transparent sm:via-48% md:from-(--background)/95 md:via-(--background)/70 md:via-42% md:to-transparent dark:from-(--background)/92 dark:via-(--background)/55 dark:via-45% dark:to-(--background)/15"
-            aria-hidden
-          />
-          <div
-            className="absolute inset-0 bg-linear-to-t from-(--background)/25 via-transparent to-transparent dark:from-(--background)/35 dark:to-transparent"
-            aria-hidden
-          />
-        </div>
-
+    <div className={`relative w-full ${mainMinH}`}>
+      {/* Viewport-fixed layer — covers navbar + page */}
+      <div className="pointer-events-none fixed inset-0 z-0">
+        <Image
+          src="/images/quran-img.jpg"
+          alt="Quran with ornamental Arabic calligraphy on the cover"
+          fill
+          priority
+          className="object-cover object-[52%_center] sm:object-[62%_center] lg:object-[68%_center]"
+          sizes="100vw"
+        />
         <div
-          className={`relative z-10 flex ${heroH} flex-col justify-center px-5 py-8 sm:px-8 md:px-12 lg:max-w-[min(100%,42rem)] lg:pl-14 lg:pr-8`}
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-(--accent)">
-            Al-Qur&apos;ān al-Karīm
-          </p>
-          <h1 className="mt-4 text-4xl font-semibold leading-[1.1] tracking-tight text-(--text) sm:text-5xl">
-            Welcome to{" "}
-            <span className="bg-linear-to-r from-(--accent) to-(--accent-dark) bg-clip-text text-transparent dark:from-teal-300 dark:to-emerald-300">
-              Nur
-            </span>
-          </h1>
-          <p className="mt-2 text-lg font-medium text-(--text-muted) sm:text-xl">
-            Read, reflect, and search — Arabic with translation.
-          </p>
-          <p className="mt-5 max-w-md text-pretty text-base leading-relaxed text-(--text-muted) sm:text-[17px]">
-            Choose a surah from the sidebar to begin, or find verses by meaning
-            with Search. Your reading preferences are saved on this device.
-          </p>
+          className="absolute inset-0 bg-linear-to-r from-stone-950/78 from-0% via-stone-950/38 via-[40%] to-transparent sm:via-[44%] md:via-[42%] dark:from-stone-950/88 dark:via-stone-950/48 dark:via-[44%] dark:to-stone-950/15"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 bg-linear-to-t from-stone-950/45 via-transparent to-stone-950/25 dark:from-black/50 dark:to-stone-950/35"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 bg-linear-to-br from-teal-950/25 via-transparent to-transparent dark:from-teal-950/35"
+          aria-hidden
+        />
+      </div>
 
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <Link
-              href="/surah/1"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-(--accent) to-(--accent-dark) px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-(--accent)/20 transition hover:opacity-95 hover:shadow-xl dark:shadow-teal-900/30"
-            >
-              Start with Al-Fātiḥah
-              <HiOutlineArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/search"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-(--border) bg-(--surface)/80 px-7 py-3.5 text-sm font-semibold text-(--text) backdrop-blur-sm transition hover:border-(--accent)/50 hover:bg-(--surface)"
-            >
-              <HiOutlineMagnifyingGlass className="h-4 w-4 text-(--accent)" />
-              Search verses
-            </Link>
+      <div className={`relative z-10 flex w-full flex-col ${mainMinH}`}>
+        <div className="flex flex-1 flex-col justify-center px-5 py-10 sm:px-10 md:px-12 lg:pl-16 lg:pr-10">
+          <div className="mx-auto w-full max-w-6xl">
+            <div className={`max-w-lg ${heroSerif}`}>
+              {/* Ornamental rule */}
+              <div className="mb-7 flex items-center gap-3 sm:mb-8">
+                <div
+                  className="h-px flex-1 bg-linear-to-r from-transparent via-teal-400/35 to-teal-300/25"
+                  aria-hidden
+                />
+                <span
+                  className={`${heroArabic} select-none text-lg text-teal-300/80 sm:text-xl`}
+                  aria-hidden
+                >
+                  ۞
+                </span>
+                <div
+                  className="h-px flex-1 bg-linear-to-l from-transparent via-teal-400/35 to-teal-300/25"
+                  aria-hidden
+                />
+              </div>
+
+              {/* Arabic title — calligraphic script */}
+              <p
+                dir="rtl"
+                className={`${heroArabic} text-[1.85rem] leading-[2.1] text-teal-100/95 sm:text-[2.15rem] sm:leading-[2.2]`}
+              >
+                القرآن الكريم
+              </p>
+              <p className="mt-3 text-[0.68rem] font-medium uppercase tracking-[0.48em] text-teal-300/70">
+                Al-Qur&apos;ān al-Karīm
+              </p>
+
+              <h1 className="mt-9 text-[2.35rem] font-normal leading-[1.12] tracking-tight text-stone-50 sm:mt-10 sm:text-[2.85rem] lg:text-[3.1rem]">
+                <span className="italic text-stone-200/95">Welcome</span>
+                <span className="font-light text-stone-400/95"> to </span>
+                <span className="bg-linear-to-r from-teal-200 to-emerald-300 bg-clip-text font-semibold text-transparent">
+                  Nur
+                </span>
+              </h1>
+
+              {/* Manuscript-style block */}
+              <div className="mt-10 border-l-[3px] border-teal-400/40 pl-5 sm:mt-11 sm:pl-6">
+                <p className="text-[1.125rem] font-normal italic leading-[1.65] text-stone-200/95 sm:text-[1.25rem] sm:leading-[1.7]">
+                  A home for recitation &mdash; the Arabic revelation, line by line,
+                  with translation that illumines each verse.
+                </p>
+                <p className="mt-6 text-[1.02rem] font-normal leading-[1.8] text-stone-400 sm:text-[1.0625rem]">
+                  When you are ready, step into the chapters:{" "}
+                  <span className="text-stone-200/95">Surah</span> in the bar
+                  above leads the way. Your reading rests gently on this device.
+                </p>
+              </div>
+
+              <div className="mt-11 sm:mt-12">
+                <Link
+                  href="/surah"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-teal-600 to-emerald-700 px-8 py-3.5 font-sans text-sm font-semibold tracking-wide text-white shadow-lg shadow-black/25 transition hover:opacity-95 hover:shadow-xl dark:from-teal-500 dark:to-emerald-600"
+                >
+                  Read the Quran
+                  <HiOutlineArrowRight
+                    className="h-4 w-4 transition group-hover:translate-x-0.5"
+                    aria-hidden
+                  />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

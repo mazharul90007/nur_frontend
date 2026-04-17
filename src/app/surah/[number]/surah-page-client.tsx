@@ -58,7 +58,7 @@ export function SurahPageClient({ surahNumber, initialData }: Props) {
           {error instanceof Error ? error.message : "Unknown error"}
         </p>
         <Link
-          href="/"
+          href="/surah"
           className="mt-4 inline-block text-sm font-medium text-(--accent) underline"
         >
           Back to surahs
@@ -74,7 +74,7 @@ export function SurahPageClient({ surahNumber, initialData }: Props) {
       <div className="mb-8 flex flex-wrap items-start justify-between gap-6 border-b border-(--border) pb-8">
         <div className="min-w-0 flex-1">
           <Link
-            href="/"
+            href="/surah"
             className="mb-3 inline-flex items-center gap-1 text-sm font-medium text-(--text-muted) transition hover:text-(--accent)"
           >
             ← All surahs

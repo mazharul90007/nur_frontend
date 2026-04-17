@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ARABIC_FONT_STACK } from "@/components/arabic-text";
+import { arabicFontFamily } from "@/components/arabic-text";
 import { fetchSurahs } from "@/lib/quran-api";
 import { revelationListIcon } from "@/lib/revelation-image";
 import {
@@ -34,7 +34,7 @@ export function SurahSidebar({ initialSurahs, onNavigate }: Props) {
   });
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-(--surface)">
+    <div className="flex h-full min-h-0 max-h-full flex-col bg-(--surface)">
       <div className="flex h-14 shrink-0 flex-col justify-center border-b border-(--border) bg-(--header-bg)/95 px-4 backdrop-blur-md">
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-(--accent)">
           Surahs
@@ -45,7 +45,7 @@ export function SurahSidebar({ initialSurahs, onNavigate }: Props) {
       </div>
 
       <nav
-        className="sidebar-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 py-3"
+        className="sidebar-scroll min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-2 py-3"
         aria-label="Surah list"
       >
         {isPending && (
@@ -97,7 +97,7 @@ export function SurahSidebar({ initialSurahs, onNavigate }: Props) {
                         className="block truncate text-[15px] leading-tight text-(--arabic-ink)"
                         dir="rtl"
                         style={{
-                          fontFamily: ARABIC_FONT_STACK[arabicFontId],
+                          fontFamily: arabicFontFamily(arabicFontId),
                         }}
                       >
                         {s.nameArabic}
