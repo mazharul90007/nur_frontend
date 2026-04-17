@@ -64,13 +64,13 @@ export default function HomePage() {
                 dir="rtl"
                 className={`${heroArabic} text-[1.85rem] leading-[2.1] text-teal-100/95 sm:text-[2.15rem] sm:leading-[2.2]`}
               >
-                القرآن الكريم
+                ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ
               </p>
-              <p className="mt-3 text-[0.68rem] font-medium uppercase tracking-[0.48em] text-teal-300/70">
+              <p className="mt-6 text-[0.68rem] font-medium uppercase tracking-[0.48em] text-teal-300/70">
                 Al-Qur&apos;ān al-Karīm
               </p>
 
-              <h1 className="mt-9 text-[2.35rem] font-normal leading-[1.12] tracking-tight text-stone-50 sm:mt-10 sm:text-[2.85rem] lg:text-[3.1rem]">
+              <h1 className="mt-4 text-[2.35rem] font-normal leading-[1.12] tracking-tight text-stone-50 sm:mt-6 sm:text-[2.85rem] lg:text-[3.1rem]">
                 <span className="italic text-stone-200/95">Welcome</span>
                 <span className="font-light text-stone-400/95"> to </span>
                 <span className="bg-linear-to-r from-teal-200 to-emerald-300 bg-clip-text font-semibold text-transparent">
@@ -79,10 +79,10 @@ export default function HomePage() {
               </h1>
 
               {/* Manuscript-style block */}
-              <div className="mt-10 border-l-[3px] border-teal-400/40 pl-5 sm:mt-11 sm:pl-6">
-                <p className="text-[1.125rem] font-normal italic leading-[1.65] text-stone-200/95 sm:text-[1.25rem] sm:leading-[1.7]">
-                  A home for recitation &mdash; the Arabic revelation, line by line,
-                  with translation that illumines each verse.
+              <div className="mt-10 sm:mt-11">
+                <p className="text-lg font-normal italic leading-[1.65] text-stone-200/95 sm:text-2xl sm:leading-[1.7]">
+                  A home for recitation &mdash; the Arabic revelation, line by
+                  line, with translation that illumines each verse.
                 </p>
                 <p className="mt-6 text-[1.02rem] font-normal leading-[1.8] text-stone-400 sm:text-[1.0625rem]">
                   When you are ready, step into the chapters:{" "}

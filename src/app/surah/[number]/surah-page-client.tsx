@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { ArabicText } from "@/components/arabic-text";
 import { fetchAyahs } from "@/lib/quran-api";
 import { revelationHeroImage } from "@/lib/revelation-image";
@@ -47,7 +48,11 @@ export function SurahPageClient({ surahNumber, initialData }: Props) {
   }, [data]);
 
   if (!settingsHydrated || isPending) {
-    return <AyahSkeleton />;
+    return (
+      <div className="flex min-h-[min(50vh,28rem)] items-center justify-center py-16">
+        <LoadingSpinner label="Loading verses…" size="lg" />
+      </div>
+    );
   }
 
   if (isError || !data) {
@@ -137,16 +142,6 @@ export function SurahPageClient({ surahNumber, initialData }: Props) {
           </li>
         ))}
       </ol>
-    </div>
-  );
-}
-
-function AyahSkeleton() {
-  return (
-    <div className="animate-pulse space-y-3">
-      <div className="h-10 w-40 rounded-lg bg-(--border)" />
-      <div className="h-32 rounded-2xl bg-(--border)/80" />
-      <div className="h-32 rounded-2xl bg-(--border)/80" />
     </div>
   );
 }

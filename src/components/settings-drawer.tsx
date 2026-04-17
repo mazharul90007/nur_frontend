@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { HiOutlineXMark } from "react-icons/hi2";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { fetchEditions } from "@/lib/quran-api";
 import type { ArabicFontId } from "@/store/settings-store";
 import { useSettingsStore } from "@/store/settings-store";
@@ -31,9 +32,15 @@ export function SettingsDrawer() {
     (s) => s.setSelectedEditionCode,
   );
 
-  const { data: editions = [] } = useQuery({
+  const {
+    data: editions = [],
+    isError: editionsError,
+    isPending: editionsPending,
+    refetch: refetchEditions,
+  } = useQuery({
     queryKey: ["editions"],
     queryFn: fetchEditions,
+    retry: 2,
   });
 
   if (!open) return null;
@@ -71,15 +78,43 @@ export function SettingsDrawer() {
 
         <div className="flex-1 overflow-y-auto px-5 py-6 space-y-8">
           <section>
-            <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-(--text-muted)">
-              Translation
-            </label>
+            <div className="mb-2 flex items-center gap-2">
+              <label className="block text-xs font-medium uppercase tracking-wider text-(--text-muted)">
+                Translation
+              </label>
+              {editionsPending && <LoadingSpinner size="sm" />}
+            </div>
+            {editionsError && (
+              <div className="mb-3 rounded-xl border border-(--danger-border) bg-(--danger-bg) px-3 py-2 text-xs text-(--danger-text)">
+                <p>Could not load translation editions from the API.</p>
+                <p className="mt-1 text-(--danger-muted)">
+                  Set <code className="rounded bg-(--surface) px-1">NEXT_PUBLIC_API_URL</code> on
+                  your host (e.g.{" "}
+                  <code className="rounded bg-(--surface) px-1">
+                    https://nur-server.vercel.app
+                  </code>
+                  ) and redeploy, or check CORS on the server.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => void refetchEditions()}
+                  className="mt-2 text-xs font-medium text-(--accent) underline"
+                >
+                  Retry
+                </button>
+              </div>
+            )}
             <select
               value={selectedEditionCode ?? ""}
               onChange={(e) => setSelectedEditionCode(e.target.value || null)}
-              className="w-full rounded-xl border border-(--border) bg-(--surface) px-4 py-3 text-sm text-(--text) outline-none transition focus:border-(--accent) focus:ring-2 focus:ring-(--accent-ring)"
+              disabled={editionsPending}
+              className="w-full rounded-xl border border-(--border) bg-(--surface) px-4 py-3 text-sm text-(--text) outline-none transition focus:border-(--accent) focus:ring-2 focus:ring-(--accent-ring) disabled:opacity-60"
             >
-              <option value="">Default (first in list)</option>
+              <option value="">
+                {editionsPending
+                  ? "Loading editions…"
+                  : "Default (first in list)"}
+              </option>
               {editions.map((e) => (
                 <option key={e.id} value={e.code}>
                   {e.name} ({e.language})

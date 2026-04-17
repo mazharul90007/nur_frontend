@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { arabicFontFamily } from "@/components/arabic-text";
 import { fetchSurahs } from "@/lib/quran-api";
 import { revelationListIcon } from "@/lib/revelation-image";
@@ -49,14 +50,9 @@ export function SurahSidebar({ initialSurahs, onNavigate }: Props) {
         aria-label="Surah list"
       >
         {isPending && (
-          <ul className="space-y-1">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <li
-                key={i}
-                className="h-14 animate-pulse rounded-xl bg-(--border)/60"
-              />
-            ))}
-          </ul>
+          <div className="flex min-h-[12rem] items-center justify-center py-8">
+            <LoadingSpinner size="md" />
+          </div>
         )}
 
         {isError && (

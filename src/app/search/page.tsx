@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { ArabicText } from "@/components/arabic-text";
 import { searchAyahs } from "@/lib/quran-api";
 import { useSettingsStore } from "@/store/settings-store";
@@ -78,9 +79,8 @@ export default function SearchPage() {
       )}
 
       {isPending && canSearch && (
-        <div className="animate-pulse space-y-4">
-          <div className="h-24 rounded-2xl bg-[var(--border)]/80" />
-          <div className="h-24 rounded-2xl bg-[var(--border)]/80" />
+        <div className="flex min-h-[12rem] items-center justify-center py-8">
+          <LoadingSpinner label="Searching…" size="lg" />
         </div>
       )}
 
