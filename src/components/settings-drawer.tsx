@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { HiOutlineXMark } from "react-icons/hi2";
 import { fetchEditions } from "@/lib/quran-api";
 import type { ArabicFontId } from "@/store/settings-store";
 import { useSettingsStore } from "@/store/settings-store";
@@ -41,11 +42,11 @@ export function SettingsDrawer() {
       <button
         type="button"
         aria-label="Close settings"
-        className="fixed inset-0 z-40 bg-(--overlay) transition-opacity"
+        className="fixed inset-0 z-[90] bg-(--overlay) transition-opacity"
         onClick={() => setOpen(false)}
       />
       <aside
-        className="fixed top-0 right-0 z-50 flex h-full w-full max-w-md flex-col border-l border-(--border) bg-(--surface-elevated) shadow-2xl"
+        className="fixed top-0 right-0 z-[95] flex h-full w-[min(75vw,28rem)] flex-col border-l border-(--border) bg-(--surface-elevated) shadow-2xl"
         role="dialog"
         aria-modal="true"
         aria-labelledby="settings-title"
@@ -63,7 +64,7 @@ export function SettingsDrawer() {
             className="rounded-full p-2 text-(--text-muted) transition hover:bg-(--surface) hover:text-(--text)"
             aria-label="Close"
           >
-            <CloseIcon />
+            <HiOutlineXMark className="h-5 w-5" aria-hidden />
           </button>
         </div>
 
@@ -148,21 +149,5 @@ export function SettingsDrawer() {
         </div>
       </aside>
     </>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    >
-      <path d="M18 6L6 18M6 6l12 12" />
-    </svg>
   );
 }

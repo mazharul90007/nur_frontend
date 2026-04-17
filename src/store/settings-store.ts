@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect, useState } from "react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -58,3 +59,50 @@ export const useSettingsStore = create<SettingsState>()(
     },
   ),
 );
+
+/** True after zustand persist has loaded from localStorage (SSR is always false). */
+export function useSettingsHydrated(): boolean {
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    const finish = () => setHydrated(true);
+    const unsub = useSettingsStore.persist.onFinishHydration(finish);
+    if (useSettingsStore.persist.hasHydrated()) {
+      queueMicrotask(finish);
+    }
+    return unsub;
+  }, []);
+
+  return hydrated;
+}
+
+/**
+ * Theme for header toggle (icon/label): first render matches SSR (`light`), then
+ * `useLayoutEffect` syncs from `<html class="dark">` or the store before paint.
+ */
+export function useEffectiveColorScheme(): ColorScheme {
+  const storeScheme = useSettingsStore((s) => s.colorScheme);
+  const hydrated = useSettingsHydrated();
+  const [scheme, setScheme] = useState<ColorScheme>("light");
+
+  useLayoutEffect(() => {
+    // Initial render must stay "light" to match SSR; then sync before paint.
+    if (!hydrated) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- sync DOM with SSR-safe first paint
+      setScheme(
+        document.documentElement.classList.contains("dark") ? "dark" : "light",
+      );
+    } else {
+      setScheme(storeScheme);
+    }
+  }, [hydrated, storeScheme]);
+
+  return scheme;
+}
+
+/** List/row UI that must match SSR: use store only after persist rehydrates. */
+export function useListColorScheme(): ColorScheme {
+  const hydrated = useSettingsHydrated();
+  const storeScheme = useSettingsStore((s) => s.colorScheme);
+  return hydrated ? storeScheme : "light";
+}

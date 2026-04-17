@@ -76,6 +76,12 @@ body {
   color: var(--text);
 }
 
+@layer base {
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
 .sidebar-scroll {
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;

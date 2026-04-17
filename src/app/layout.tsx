@@ -54,6 +54,14 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${dmSans.variable} ${amiri.variable} ${scheherazade.variable} ${notoNaskh.variable} h-full antialiased`}
     >
+      <head>
+        {/* Runs before paint so dark mode matches localStorage (zustand rehydrates async). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var r=localStorage.getItem("nur-quran-settings");if(!r)return;var p=JSON.parse(r);var s=p&&p.state;if(s&&s.colorScheme==="dark")document.documentElement.classList.add("dark");}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-full">
         <Providers>
           <AppShell initialSurahs={initialSurahs}>{children}</AppShell>

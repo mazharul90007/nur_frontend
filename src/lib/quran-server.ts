@@ -8,7 +8,7 @@ function getApiBase(): string {
   const base =
     process.env.API_URL?.replace(/\/$/, "") ??
     process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ??
-    "http://localhost:3001";
+    "http://localhost:4000";
   return base;
 }
 
